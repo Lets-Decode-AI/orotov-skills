@@ -1,0 +1,31 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "orotov",
+  "owner": {
+    "name": "LETSDECODE TECHNOLOGIES LLP"
+  },
+  "metadata": {
+    "description": "OROTOV board workflow skills — scope, discover, plan, build, and debug against an OROTOV MCP board. Requires an OROTOV workspace API key."
+  },
+  "plugins": [
+    {
+      "name": "orotov",
+      "displayName": "OROTOV",
+      "description": "The OROTOV board workflow: scope, discover, plan, build, and debug skills that drive work through an OROTOV MCP board.",
+      "version": "0.1.0",
+      "author": {
+        "name": "LETSDECODE TECHNOLOGIES LLP"
+      },
+      "source": "./plugin",
+      "category": "workflow",
+      "tags": [
+        "orotov",
+        "mcp",
+        "tdd",
+        "planning",
+        "skills"
+      ],
+      "homepage": "https://github.com/Lets-Decode-AI/orotov-skills"
+    }
+  ]
+}
