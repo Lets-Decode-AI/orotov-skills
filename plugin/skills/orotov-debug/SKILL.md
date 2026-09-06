@@ -1,6 +1,8 @@
 ---
 name: orotov-debug
 description: Use when investigating a bug, unexpected behavior, or performance regression with OROTOV board tracking.
+metadata:
+  version: "0.1.0"
 ---
 
 # OROTOV: Debug

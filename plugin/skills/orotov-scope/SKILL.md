@@ -1,6 +1,8 @@
 ---
 name: orotov-scope
 description: Use when a feature, bug, or design needs clarification and decomposition into OROTOV board work.
+metadata:
+  version: "0.1.0"
 ---
 
 # OROTOV: Scope & Plan

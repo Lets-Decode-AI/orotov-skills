@@ -1,6 +1,8 @@
 ---
 name: orotov-build
 description: Use when a claimed OROTOV issue has a clear specification and acceptance criteria ready to implement.
+metadata:
+  version: "0.1.0"
 ---
 
 # OROTOV: Build & Review
@@ -59,7 +61,7 @@ Spawn a subagent (model: standard) with this prompt — fill in the `<placeholde
 ```
 You are implementing issue #<issue_id>.
 
-Read `${CLAUDE_PLUGIN_ROOT}/skills/orotov-build/implementer-prompt.md`.
+Read `implementer-prompt.md` (in this skill's directory).
 
 Issue Spec:
 <spec>
@@ -99,7 +101,7 @@ mcp__orotov__log_work(
 ```
 You are the spec reviewer for issue #<issue_id>.
 
-Read `${CLAUDE_PLUGIN_ROOT}/skills/orotov-build/spec-reviewer-prompt.md`.
+Read `spec-reviewer-prompt.md` (in this skill's directory).
 
 Issue Spec:
 <spec>
@@ -162,7 +164,7 @@ Proceed to Step 4.
 ```
 You are the code quality reviewer for issue #<issue_id>.
 
-Read `${CLAUDE_PLUGIN_ROOT}/skills/orotov-build/code-quality-reviewer-prompt.md`.
+Read `code-quality-reviewer-prompt.md` (in this skill's directory).
 
 Issue Spec (context only):
 <spec>
