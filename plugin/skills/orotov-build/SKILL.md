@@ -2,7 +2,7 @@
 name: orotov-build
 description: Use when a claimed OROTOV issue has a clear specification and acceptance criteria ready to implement.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # OROTOV: Build & Review

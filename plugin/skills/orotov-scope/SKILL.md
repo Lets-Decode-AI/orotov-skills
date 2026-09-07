@@ -2,7 +2,7 @@
 name: orotov-scope
 description: Use when a feature, bug, or design needs clarification and decomposition into OROTOV board work.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # OROTOV: Scope & Plan

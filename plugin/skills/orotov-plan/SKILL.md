@@ -2,7 +2,7 @@
 name: orotov-plan
 description: Use when clarified requirements need a structured execution plan with testable tasks.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # OROTOV: Execution Planning
