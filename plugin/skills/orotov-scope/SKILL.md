@@ -37,22 +37,32 @@ skill's tracer-bullet approach for the parsing step.
 
 ## Creating stories and issues
 
-Use the OROTOV MCP tools (`mcp__orotov__*`). The stack is **SQLite** behind a
-FastAPI app — no external services to configure.
+Use the OROTOV MCP tools (`mcp__orotov__*`). The hosted stack is FastAPI on
+**PostgreSQL**; the tool schemas advertise every length limit and enum, and a
+rejected call returns `error_code`, `field` and `constraint` instead of a
+database error.
 
 | Step | Tool | Key args |
 |------|------|----------|
-| One story per phase | `create_story` | `title`, `description`, `labels` → returns `id` |
-| Story-level context | `set_story_context` | `story_id`, `overview`, `architecture_notes`, `constraints`, `tech_stack`, `examples` |
-| One issue per task | `create_issue` | `story_id`, `title`, `description`, `priority`, `labels` → returns `id` |
-| TDD spec per issue | `set_issue_spec` | `issue_id`, `acceptance_criteria`, `requirements`, `test_requirements`, `definition_of_done` |
+| One story per phase | `create_story` | `title` (≤255), `description`, `labels` (≤255, comma-separated) → returns `id` |
+| Story-level context | `set_story_context` | `story_id`, `overview`, `architecture_notes`, `constraints`, `tech_stack`, `examples`, `interview_summary`, `architecture_decisions` |
+| One issue per task | `create_issue` | `story_id`, `title` (≤255), `description`, `priority` (`Critical`/`High`/`Medium`/`Low`), `labels` → returns `id` |
+| TDD spec per issue | `set_issue_spec` | `issue_id`, `acceptance_criteria`, `requirements`, `implementation_notes`, `test_requirements`, `definition_of_done`, `examples`, `references`, `plan_section_ref`, `do_not_do` |
+| Fix a title/description/labels later | `update_issue` | `issue_id` + only the fields that change |
 | Dependencies | see below | link issues that must run in order |
 
-**Dependencies** — two equivalent options:
-- REST: `POST /api/issues/{issue_id}/blockers` with body `{"depends_on_id": <other_issue_id>}`
-  (issue is blocked by the other). *Not* `/dependencies`.
-- MCP: `add_issue_link(source_issue_id, target_issue_id, link_type="blocks", note=...)`.
+`set_story_context` and `set_issue_spec` are **patches**: send only the fields
+you are changing — the rest are kept. To remove stale text, name the field in
+`clear_fields` (an empty string is rejected). Pass `expected_version` from the
+last read to refuse the write if someone changed it in between.
+
+**Dependencies:**
+- MCP has **no blocker tool**. Record ordering with
+  `add_issue_link(source_issue_id, target_issue_id, link_type="blocks", note=...)`.
   Valid `link_type`s: `blocks`, `relates-to`, `caused-by`, `duplicates`, `is-fixed-by`, `clones`.
+  A link documents order; it does not auto-block the issue.
+- REST only (not reachable from MCP): `POST /api/issues/{issue_id}/blockers` with body
+  `{"depends_on_id": <other_issue_id>}` auto-blocks the issue until the dependency is Done.
 
 Create issues first, then add blockers/links once both IDs exist.
 
@@ -102,7 +112,7 @@ mid-session — auto-refresh or show a clear error.
 ✓ Saved .claude/plans/2026-06-14-fix-jwt-refresh.md
 ✓ create_story → Story 1; set_story_context
 ✓ create_issue ×3; set_issue_spec ×3
-✓ POST /api/issues/2/blockers {depends_on_id: 1}; POST /api/issues/3/blockers {depends_on_id: 2}
+✓ add_issue_link(2 → 1, "blocks"); add_issue_link(3 → 2, "blocks")
 
 Done! 1 story, 3 issues. Agents can claim Issue 1 and run /orotov-build <id>.
 ```

@@ -54,6 +54,11 @@ mcp__orotov__log_work(
 
 > Status values are capitalized: `New`, `In Progress`, `In Review`, `Done`, `Blocked`.
 
+> `log_work` records testimony only: `event_type` is one of `work_note`, `debug_note`,
+> `handoff_note`, `session_started`, `session_ended`, and `summary` is at most 500
+> characters (put detail in `detail`). State changes are recorded by the tool that
+> makes them (`update_status`, `link_commit`, ...), never logged by hand.
+
 ## Step 2: Spawn Implementer Subagent
 
 Spawn a subagent (model: standard) with this prompt — fill in the `<placeholders>`:

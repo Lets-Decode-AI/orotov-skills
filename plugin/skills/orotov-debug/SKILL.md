@@ -88,6 +88,11 @@ mcp__orotov__log_decision(
   decision_text="Root cause: <finding>. Evidence: <what proved this>. Ruled out: <alternatives considered>",
   category="Architecture"
 )
+# decision_text ≤ 2000 chars. category is one of the values advertised in the
+# tool schema (Architecture, Security, Product, Scope, Compliance, Clinical,
+# Infrastructure, Data, Testing, Performance, TradeOff, CodeOrganization, Other).
+# Decisions start "proposed"; a wrong one is corrected with supersede_decision,
+# never by logging a second, unlinked decision.
 ```
 
 ### After Phase 2 (Pattern Found)
@@ -129,6 +134,9 @@ mcp__orotov__log_work(
 ```
 
 ## Step 3: Record Findings on Story Context
+
+`set_story_context` is a patch: only the fields you pass change. Name a field in
+`clear_fields` to remove a stale value.
 
 ```
 mcp__orotov__set_story_context(
